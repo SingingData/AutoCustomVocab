@@ -28,7 +28,7 @@ library(tidytext)
 #Tidy Text reference
 #https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html
 #https://cran.r-project.org/web/packages/tidytext/vignettes/tidying_casting.html
- 
+#helpful   browseVignettes(package = "tidytext") 
 
 
 ##################################
@@ -36,8 +36,6 @@ library(tidytext)
 #INGEST DATA FROM YOUR SOURCE TEXT
 #
 ##################################
-#helpful   browseVignettes(package = "tidytext")
-
 fileName <- "theletter.txt"
 conn <- file(fileName,open="r")
 lines<-readLines(conn)
@@ -96,7 +94,6 @@ dim(text_singlewords)
 text_ngrams<-lines1 %>%unnest_tokens(ngram, lines, token = "ngrams", n = 2) %>%
   count(ngram, sort = TRUE) %>%
   separate(ngram, c("word1", "word2"), sep = " ")
-
 text_ngrams$ngram = paste(text_ngrams$word1, text_ngrams$word2, sep=" ")
 myvars<-c("ngram")
 text_ngrams<-text_ngrams[myvars]
