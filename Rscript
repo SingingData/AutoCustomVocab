@@ -1,5 +1,5 @@
 
-#R script to auto generate custom vocabulary list
+##R script to auto generate custom vocabulary list
 
 
 
@@ -31,12 +31,13 @@ library(tidytext)
  
 
 
-######################
+##################################
 #
-#INGEST DATA FROM TEXT
+#INGEST DATA FROM YOUR SOURCE TEXT
 #
-######################
+##################################
 #helpful   browseVignettes(package = "tidytext")
+
 fileName <- "theletter.txt"
 conn <- file(fileName,open="r")
 lines<-readLines(conn)
@@ -45,11 +46,11 @@ lines1<-as.data.frame(lines)
 
 
 
-#####################
+#################################
 #
-#Create Corpus Class, Clean Text and Convert Text to Sentence
+#Create Corpus and Clean Text.  
 #
-#####################
+#################################
 sourcetext <- tm::Corpus(VectorSource(lines))
 rm(lines)
 
@@ -85,11 +86,11 @@ tail(text_singlewords)
 dim(text_singlewords) 
 
 
-##################
+####################################
 #
 #Break corpus into N-grams
 #
-###################
+####################################
 #break here into all 2 n-grams in text
 text_ngrams<-lines1 %>%unnest_tokens(ngram, lines, token = "ngrams", n = 2) %>%
   count(ngram, sort = TRUE) %>%
@@ -157,6 +158,7 @@ head(text_ngrams)
 customvocab_ngrams<-filter(text_ngrams,Iscommon==FALSE)
 myvars<-c("ngram")
 customvocab_ngrams<-customvocab_ngrams[myvars]
+#get rid of more common ngrams
 customvocab_ngrams<-customvocab_ngrams[!grepl("a ", customvocab_ngrams$ngram),] 
 customvocab_ngrams<-customvocab_ngrams[!grepl("and ", customvocab_ngrams$ngram),] 
 customvocab_ngrams<-customvocab_ngrams[!grepl("it ", customvocab_ngrams$ngram),] 
@@ -180,4 +182,6 @@ head(customvocabwords)
 write.csv(file="customvocab_ngrams.csv", x=customvocab_ngrams)
 write.csv(file="customvocabwords.csv", x=customvocabwords)
 
+#These lists will include the potential custom vocabulary you want to potentially record to create your custom vocabulary model in the 
+#Custom Language Service.
 
