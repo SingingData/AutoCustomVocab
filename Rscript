@@ -86,6 +86,7 @@ tail(text_singlewords)
 dim(text_singlewords) 
 
 
+
 ####################################
 #
 #Break corpus into N-grams
@@ -102,6 +103,7 @@ text_ngrams<-text_ngrams[myvars]
 text_ngrams$ngram<-tolower(as.character(text_ngrams$ngram))
 head(text_ngrams)
 dim(text_ngrams)
+
 
 
 ############################################################
@@ -135,14 +137,11 @@ dim(customvocabwords)
 
 
 
-
-
 ##################################################################
 #
 #Map grams to frequency, generate custom vocabulary ngram list
 #
 ##################################################################
-
 #Input common 2 ngrams list
 #leveraging Norvig's list commong 2 ngrams here http://norvig.com/ngrams/
 input <- read.table(file='count_2w.txt')
@@ -170,6 +169,8 @@ customvocab_ngrams<-customvocab_ngrams[!grepl(" i", customvocab_ngrams$ngram),]
 customvocab_ngrams<-arrange(customvocab_ngrams,ngram)
 head(customvocab_ngrams,10)
 dim(customvocab_ngrams)
+
+
 
 #####################################################################
 #
